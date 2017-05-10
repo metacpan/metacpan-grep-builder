@@ -3,7 +3,7 @@
 
 
 my $packages = {};
-open(my $fh, '<', '/root/.cpan/sources/modules/02packages.details.txt') or die;
+open(my $fh, '<', '/perl/minicpan_grep/02packages.details.txt') or die;
 
 # Read in and ignore the header.
 my $line = <$fh>;
@@ -28,7 +28,8 @@ while ($line = <$fh>) {
 
     # Determine main package name
     my $distro = $filename;
-    $distro =~ s/-[^-]+?$//; # Strip off version and tar extension.
+    $distro =~ s/-20130623.tgz$//; # triceps-1.0.93-20130623.tgz
+    $distro =~ s/-[^-]+$//; # Strip off version and tar extension.
 
     # Skip if we have a newer version for $distro already.
     next if( $packages->{$distro} && version->parse($version) < version->parse($packages->{$distro}->{'version'}));
